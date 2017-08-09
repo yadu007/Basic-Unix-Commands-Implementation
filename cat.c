@@ -1,17 +1,25 @@
 #include<stdio.h>
 #include<string.h>
-int main(int argc, char *argv[])
+#include <stdlib.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <unistd.h>
+ int main(int argc, char *argv[])
 {
- FILE *fp;
- char ch; 
+ int fp;
+ char ch[99]; 
+ int op;
 
-    fp=fopen(argv[1], "r");
+    fp=open(argv[1], O_RDONLY);
+    
  
-    while((ch=fgetc(fp)) != EOF){
-         putchar(ch);
+    while(op=read(fp,ch,99)){
+	    
+         write(1,ch,op);
     }
-    printf("\n")
-    fclose(fp);
+    printf("\n");
+    close(fp);
  
 return 0;
 }
